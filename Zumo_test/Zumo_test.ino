@@ -22,7 +22,7 @@ NewPing sonar(triggerPin, echoPin, maxDistance);
 // these might need to be tuned for different motor types
 #define REVERSE_SPEED     250 // 0 is stopped, 400 is full speed
 #define TURN_SPEED        300
-#define FORWARD_SPEED     150
+#define FORWARD_SPEED     100
 #define REVERSE_DURATION  200 // ms
 #define TURN_DURATION     400 // ms
  

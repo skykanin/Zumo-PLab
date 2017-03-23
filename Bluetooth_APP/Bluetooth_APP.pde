@@ -9,6 +9,28 @@ int button1W, button1H;
 color buttonColor, baseColor;
 Textfield myTextfield;
 
+private PLabBridge pBridge;
+
+private String received = null;
+
+void bindPLabBridge (PLabBridge bridge) {
+
+  pBridge = bridge;
+  
+  bridge.subscribeMessages (new PLabRecv() {
+    public void receive (String string) {
+      // code on BT receive goes here.
+    }
+  });
+  size(bridge.getWidth(), bridge.getHeight());
+}
+
+void btWrite(String string) {
+  if (pBridge != null) {
+    pBridge.send(string);
+  }
+}
+
 void setup(){
   s=new Serial(this, Serial.list()[0], 9900);
   
@@ -20,7 +42,7 @@ void setup(){
  PFont font = createFont("arial", 30);
   textFont(font);
   cp5 = new ControlP5(this);
-  myTextfield = cp5.addTextfield("Send")
+  myTextfield = cp5.addTextfield("Send or receive")
   .setPosition(50,50).setSize(300,50)
   .setFocus(true).setFont(font);
      
@@ -49,8 +71,19 @@ void draw(){
   //text(cp5.get(Textfield.class,"Send").getText(), 100, 200);
   //text(cp5.get(Textfield.class,"Motta").getText(), 360,130);
   
-  String myText = myTextfield.getText();
-  controlEvent(myText);
+  if (mouseX > (button1X+30) && mouseX < (button1X+30)+100 && 
+      mouseY > (button1Y+30) && mouseY < (button1Y+30)-50){
+        String myText = myTextfield.getText();
+        controlEvent(myText, "Set");
+        println("GOTEM");
+      }
+      
+  if (mouseX > (button2X+30) && mouseX < (button2X+30)+100 && 
+      mouseY > (button2Y+30) && mouseY < (button2Y+30)-50){
+        String myText = myTextfield.getText();
+        controlEvent(myText, "Get");
+        println("GOTEM");
+      }
 }
 
 public void clear() {
@@ -58,6 +91,6 @@ public void clear() {
   cp5.get(Textfield.class,"Motta").clear();
 }
 
-void controlEvent(String text) {
-  s.write(text);
+void controlEvent(String text, String info) {
+  s.write(info + " " + text);
 }

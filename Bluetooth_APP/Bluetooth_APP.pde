@@ -1,5 +1,7 @@
 import controlP5.*;
+import processing.serial.*;
 
+Serial s;
 ControlP5 cp5;
 
 int button1X, button1Y, button2X, button2Y;
@@ -7,6 +9,8 @@ int button1W, button1H;
 color buttonColor, baseColor;
 
 void setup(){
+  s=new Serial(this, Serial.list()[0], 9900);
+  
   size(400, 500);
   
   PFont font = createFont("arial",20);
@@ -57,7 +61,8 @@ void draw(){
 }
 
 public void clear() {
-  cp5.get(Textfield.class,"textValue").clear();
+  cp5.get(Textfield.class,"Send").clear();
+  cp5.get(Textfield.class,"Motta").clear();
 }
 
 void controlEvent(ControlEvent theEvent) {
@@ -71,5 +76,5 @@ void controlEvent(ControlEvent theEvent) {
 
 public void input(String theText) {
   // automatically receives results from controller input
-  println("a textfield event for controller 'input' : "+theText);
+  println("a textfield event for controller 'input' : "+ theText);
 }

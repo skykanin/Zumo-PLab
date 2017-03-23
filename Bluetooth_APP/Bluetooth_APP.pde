@@ -7,32 +7,22 @@ ControlP5 cp5;
 int button1X, button1Y, button2X, button2Y;
 int button1W, button1H;
 color buttonColor, baseColor;
+Textfield myTextfield;
 
 void setup(){
   s=new Serial(this, Serial.list()[0], 9900);
   
   size(400, 500);
-  
-  PFont font = createFont("arial",20);
+ 
   
   cp5 = new ControlP5(this);
   
-  cp5.addTextfield("Send")
-     .setPosition(20,100)
-     .setSize(200,40)
-     .setFont(font)
-     .setFocus(true)
-     .setColor(color(255,0,0))
-     ;
-  cp5.addTextfield("Motta")
-     .setPosition(20,170)
-     .setSize(200,40)
-     .setFont(createFont("arial",20))
-     .setAutoClear(false)
-     ;
-
-     
+ PFont font = createFont("arial", 30);
   textFont(font);
+  cp5 = new ControlP5(this);
+  myTextfield = cp5.addTextfield("Send")
+  .setPosition(50,50).setSize(300,50)
+  .setFocus(true).setFont(font);
      
   buttonColor = (51);
   baseColor = (255);
@@ -56,8 +46,11 @@ void draw(){
   text("Set", button1X+30, button1Y+35);
   text("Get", button2X+30, button2Y+35); 
   
-  text(cp5.get(Textfield.class,"Send").getText(), 100, 200);
-  text(cp5.get(Textfield.class,"Motta").getText(), 360,130);
+  //text(cp5.get(Textfield.class,"Send").getText(), 100, 200);
+  //text(cp5.get(Textfield.class,"Motta").getText(), 360,130);
+  
+  String myText = myTextfield.getText();
+  controlEvent(myText);
 }
 
 public void clear() {
@@ -65,16 +58,6 @@ public void clear() {
   cp5.get(Textfield.class,"Motta").clear();
 }
 
-void controlEvent(ControlEvent theEvent) {
-  if(theEvent.isAssignableFrom(Textfield.class)) {
-    println("controlEvent: accessing a string from controller '"
-            +theEvent.getName()+"': "
-            +theEvent.getStringValue()
-            );
-  }
-}
-
-public void input(String theText) {
-  // automatically receives results from controller input
-  println("a textfield event for controller 'input' : "+ theText);
+void controlEvent(String text) {
+  s.write(text);
 }

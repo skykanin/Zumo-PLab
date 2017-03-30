@@ -9,7 +9,7 @@ int button1W, button1H;
 color buttonColor, baseColor;
 
 void setup(){
-  s=new Serial(this, Serial.list()[5], 38400);
+  s=new Serial(this, Serial.list()[0], 38400);
   
   size(400, 500);
   
@@ -24,13 +24,6 @@ void setup(){
      .setFocus(true)
      .setColor(color(255,0,0))
      ;
-  cp5.addTextfield("Motta")
-     .setPosition(20,170)
-     .setSize(200,40)
-     .setFont(createFont("arial",20))
-     .setAutoClear(false)
-     ;
-
      
   textFont(font);
      
@@ -57,7 +50,6 @@ void draw(){
   text("Get", button2X+30, button2Y+35); 
   
   text(cp5.get(Textfield.class,"Send").getText(), 100, 200);
-  text(cp5.get(Textfield.class,"Motta").getText(), 360,130);
 }
 
 public void clear() {
@@ -67,14 +59,11 @@ public void clear() {
 
 void controlEvent(ControlEvent theEvent) {
   if(theEvent.isAssignableFrom(Textfield.class)) {
-    println("controlEvent: accessing a string from controller '"
-            +theEvent.getName()+"': "
-            +theEvent.getStringValue()
-            );
+    println(theEvent.getName()+theEvent.getStringValue());
   }
 }
 
 public void input(String theText) {
   // automatically receives results from controller input
-  println("a textfield event for controller 'input' : "+theText);
+  println(theText);
 }

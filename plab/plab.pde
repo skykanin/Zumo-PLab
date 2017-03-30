@@ -126,7 +126,7 @@ int[] buttonFrameForward = {150,25,100,25};
 String buttonStringForward = "x = 100";
 
 int[] buttonFrameStepF = {150,75,100,25};
-String buttonStringStepF = "Step F";
+String buttonStringStepF = "Start";
 
 int[] buttonFrameLeft = {25,125,75,25};
 String buttonStringLeft = "Left 90";
@@ -181,7 +181,7 @@ void mousePressed() {
       btWrite("x = 100");
    } else 
    if (mouseInside(buttonFrameStepF)) {
-      btWrite("STEPF");  
+      btWrite("start");  
    } else 
    if (mouseInside(buttonFrameLeft)) {
       btWrite("LEFT");  

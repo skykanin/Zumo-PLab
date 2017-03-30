@@ -7,44 +7,32 @@ ControlP5 cp5;
 int button1X, button1Y, button2X, button2Y;
 int button1W, button1H;
 color buttonColor, baseColor;
-Textfield myTextfield;
-
-private PLabBridge pBridge;
-
-private String received = null;
-
-void bindPLabBridge (PLabBridge bridge) {
-
-  pBridge = bridge;
-  
-  bridge.subscribeMessages (new PLabRecv() {
-    public void receive (String string) {
-      // code on BT receive goes here.
-    }
-  });
-  size(bridge.getWidth(), bridge.getHeight());
-}
-
-void btWrite(String string) {
-  if (pBridge != null) {
-    pBridge.send(string);
-  }
-}
 
 void setup(){
-  s=new Serial(this, Serial.list()[0], 9900);
+  s=new Serial(this, Serial.list()[5], 38400);
   
   size(400, 500);
- 
+  
+  PFont font = createFont("arial",20);
   
   cp5 = new ControlP5(this);
   
- PFont font = createFont("arial", 30);
+  cp5.addTextfield("Send")
+     .setPosition(20,100)
+     .setSize(200,40)
+     .setFont(font)
+     .setFocus(true)
+     .setColor(color(255,0,0))
+     ;
+  cp5.addTextfield("Motta")
+     .setPosition(20,170)
+     .setSize(200,40)
+     .setFont(createFont("arial",20))
+     .setAutoClear(false)
+     ;
+
+     
   textFont(font);
-  cp5 = new ControlP5(this);
-  myTextfield = cp5.addTextfield("Send or receive")
-  .setPosition(50,50).setSize(300,50)
-  .setFocus(true).setFont(font);
      
   buttonColor = (51);
   baseColor = (255);
@@ -68,22 +56,8 @@ void draw(){
   text("Set", button1X+30, button1Y+35);
   text("Get", button2X+30, button2Y+35); 
   
-  //text(cp5.get(Textfield.class,"Send").getText(), 100, 200);
-  //text(cp5.get(Textfield.class,"Motta").getText(), 360,130);
-  
-  if (mouseX > (button1X+30) && mouseX < (button1X+30)+100 && 
-      mouseY > (button1Y+30) && mouseY < (button1Y+30)-50){
-        String myText = myTextfield.getText();
-        controlEvent(myText, "Set");
-        println("GOTEM");
-      }
-      
-  if (mouseX > (button2X+30) && mouseX < (button2X+30)+100 && 
-      mouseY > (button2Y+30) && mouseY < (button2Y+30)-50){
-        String myText = myTextfield.getText();
-        controlEvent(myText, "Get");
-        println("GOTEM");
-      }
+  text(cp5.get(Textfield.class,"Send").getText(), 100, 200);
+  text(cp5.get(Textfield.class,"Motta").getText(), 360,130);
 }
 
 public void clear() {
@@ -91,6 +65,16 @@ public void clear() {
   cp5.get(Textfield.class,"Motta").clear();
 }
 
-void controlEvent(String text, String info) {
-  s.write(info + " " + text);
+void controlEvent(ControlEvent theEvent) {
+  if(theEvent.isAssignableFrom(Textfield.class)) {
+    println("controlEvent: accessing a string from controller '"
+            +theEvent.getName()+"': "
+            +theEvent.getStringValue()
+            );
+  }
+}
+
+public void input(String theText) {
+  // automatically receives results from controller input
+  println("a textfield event for controller 'input' : "+theText);
 }

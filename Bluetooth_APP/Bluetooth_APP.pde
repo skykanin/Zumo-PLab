@@ -1,8 +1,32 @@
 import controlP5.*;
 import processing.serial.*;
 
+private PLabBridge pBridge;
+
 Serial s;
 ControlP5 cp5;
+
+void bindPLabBridge (PLabBridge bridge) {
+
+  pBridge = bridge;
+  
+  // Vi trenger noe som hoerer etter endringer i verdi
+  // We need something that listens to a change in the value
+  // Vi bruker en anonym indre klasse for dette
+  // We use an anonymous inner class for this
+  bridge.subscribeMessages (new PLabRecv() {
+    public void receive (String string) {
+      // code on BT receive goes here.
+    }
+  });
+  size(bridge.getWidth(), bridge.getHeight());
+}
+
+void btWrite(String string) {
+  if (pBridge != null) {
+    pBridge.send(string);
+  }
+}
 
 int button1X, button1Y, button2X, button2Y;
 int button1W, button1H;
@@ -60,10 +84,12 @@ public void clear() {
 void controlEvent(ControlEvent theEvent) {
   if(theEvent.isAssignableFrom(Textfield.class)) {
     println(theEvent.getName()+theEvent.getStringValue());
+    btWrite(theEvent.getName()+theEvent.getStringValue());
   }
 }
 
 public void input(String theText) {
   // automatically receives results from controller input
   println(theText);
+  btWrite(theText);
 }

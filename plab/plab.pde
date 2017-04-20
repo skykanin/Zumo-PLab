@@ -126,25 +126,25 @@ int[] buttonFrameForward = {150,25,100,25};
 String buttonStringForward = "x = 100";
 
 int[] buttonFrameStepF = {150,75,100,25};
-String buttonStringStepF = "Start";
+String buttonStringStepF = "x = 50";
 
 int[] buttonFrameLeft = {25,125,75,25};
-String buttonStringLeft = "Left 90";
+String buttonStringLeft = "x = 25";
 
 int[] buttonFrameL45 = {120,125,35,25};
-String buttonStringL45 = "45";
+String buttonStringL45 = "x = 12";
 
 int[] buttonFrameStop = {175,125,50,25};
-String buttonStringStop = "Stop";
+String buttonStringStop = "x = 20";
 
 int[] buttonFrameR45 = {245,125,35,25};
-String buttonStringR45 = "45";
+String buttonStringR45 = "x = 200";
 
 int[] buttonFrameRight = {300,125,75,25};
-String buttonStringRight = "Right 90";
+String buttonStringRight = "x = 150";
 
 int[] buttonFrameStepB = {150,175,100,25};
-String buttonStringStepB = "Step B";
+String buttonStringStepB = "x = 175";
 
 int[] buttonFrameBackward = {150,225,100,25};
 String buttonStringBackward = "Backward";
@@ -181,25 +181,25 @@ void mousePressed() {
       btWrite("x = 100");
    } else 
    if (mouseInside(buttonFrameStepF)) {
-      btWrite("start");  
+      btWrite("x = 50");  
    } else 
    if (mouseInside(buttonFrameLeft)) {
-      btWrite("LEFT");  
+      btWrite("x = 20");  
    } else 
    if (mouseInside(buttonFrameL45)) {
-      btWrite("L45");  
+      btWrite("x = 75");  
    } else 
    if (mouseInside(buttonFrameStop)) {
-      btWrite("STOP");  
+      btWrite("x = 12");  
      } else 
    if (mouseInside(buttonFrameR45)) {
-      btWrite("R45");  
+      btWrite("x = 150");  
          } else 
    if (mouseInside(buttonFrameRight)) {
-      btWrite("RIGHT");  
+      btWrite("x = 200");  
    } else 
    if (mouseInside(buttonFrameStepB)) {
-      btWrite("STEPB");  
+      btWrite("x = 175");  
      } else 
    if (mouseInside(buttonFrameBackward)) {
       btWrite("set var 100");  
